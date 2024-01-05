@@ -71,3 +71,22 @@ def medel_img_store(request):
     model.save()
     
     return render(request,'admin_user/img_40_upload.html')
+
+# def hospital_details_view(request, id):
+#     divi_data = Division_Name.objects.values('id','name').distinct()
+#     dist_data = District_Name.objects.select_related('divi_fk').values('id','district','divi_fk').distinct()
+#     station_data = Station.objects.select_related('dis_fk','divi_fk').values('divi_fk','dis_fk','station').distinct()
+#     hospital_cat_data = hospital_categories.objects.values('hos_cat').distinct()
+#     hospital_details_data = address_name.objects.select_related('division_fk','district_fk','station_fk','hos_type_fk').filter(id=id).values('id','division_fk','district_fk','station_fk','hos_type_fk','hos_name','zip_code','address','image','description')
+#     hospital_data = hospital_details_data.order_by('-discount_price')[:8]
+    
+    
+#     context = {
+#         'divi_data':divi_data,
+#         'dist_cat':dist_data,
+#         'station_data':station_data,
+#         'hosp_cat_data':hospital_cat_data,
+#         'hospital_data':hospital_data,
+        
+#         }
+#     return render(request, 'hospitals/hospital_all_code/index.html',context)

@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'Category',
     'Home',
     'SubCategory',
+    'register',
     
 ]
 

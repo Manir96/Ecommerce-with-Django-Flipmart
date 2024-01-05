@@ -26,5 +26,6 @@ urlpatterns = [
     path('category/',include('Category.urls')),
     path('',include('Home.urls')),
     path('subcat/',include('SubCategory.urls')),
+    path('register/',include('register.urls')),
     
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
