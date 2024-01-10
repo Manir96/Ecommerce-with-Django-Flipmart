@@ -33,10 +33,10 @@ class header(View):
         
         return render(request, 'base_code/header.html')
     
-class logPage(View):
-    def get(self, request):
+# class logPage(View):
+#     def get(self, request):
         
-        return render(request, 'naver/login.html')
+#         return render(request, 'naver/login.html')
 
 class checkout(View):
     def get(self, request):

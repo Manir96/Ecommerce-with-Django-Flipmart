@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Congratulations</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f0;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #4CAF50;
+        }
+
+        p {
+            color: #333;
+        }
+
+        .success-icon {
+            width: 100px;
+            height: 100px;
+            margin: 20px auto;
+            background-color: #4CAF50;
+            color: #fff;
+            font-size: 50px;
+            line-height: 100px;
+            border-radius: 50%;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="success-icon">&#10004;</div>
+        <h1>Congratulations! Mr <b>{{u_data.fname}}</b></h1>
+        <p>You have verified and registered the account successfully.</p>
+    </div>
+    <div class="welcome_btn">
+        <button class="wc_send"><a href="{% url 'login' %}">Log in</a></button>
+    </div>
+</body>
+</html>

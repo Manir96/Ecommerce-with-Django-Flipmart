@@ -4,11 +4,6 @@ from . import views as a_user
 from django.contrib.auth import views as auth_views
 from django.views.generic import TemplateView
 
-
-
-
-
-
 urlpatterns = [  
     # path('', a_user.auth_user_index,name='aut_index'),
     # path('term/', a_user.Terms_of_use,name='term'),

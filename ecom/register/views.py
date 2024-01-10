@@ -34,7 +34,7 @@ def user_index_panel(request):
 # Create your views here.
 def signup_auth_panel(request):
     if 'user_id' in request.session:
-        return redirect('signup')
+        return redirect('/register/signup/')
     if request.method == 'POST':
         fname = request.POST.get('fname')
         email = request.POST.get('email').strip()
@@ -53,34 +53,34 @@ def signup_auth_panel(request):
         else:
             if(len(fname)<3):
                 messages.error(request, 'the field length must be minimum 3')
-                return redirect('/signup/')
+                return redirect('/register/signup/')
             elif(len(password)<8 ):
                 messages.error(request, 'Password length must be minimum 8')
-                return redirect('/signup/')
+                return redirect('/register/signup/')
             elif(not re.search(r'[A-Z]', password)):
                 messages.error(request, 'Password must contain at least one uppercase letter')
-                return redirect('/signup/')
+                return redirect('/register/signup/')
             elif(not re.search(r'\d', password)):
                 messages.error(request, 'Password must contain at least one digit')
-                return redirect('/signup/')
+                return redirect('/register/signup/')
             elif(not re.search(r'[!@#$%^&*()_+=\-{}[\]:;"\'|<,>.?/~]', password)):
                 messages.error(request, 'Password must contain at least one special character')
-                return redirect('/signup/')
+                return redirect('/register/signup/')
             elif(password!=con_password):
                 messages.error(request, 'Your password and confirm password does not match.')
-                return redirect('/signup/')
+                return redirect('/register/signup/')
             elif(models.user_register.objects.filter(mobile=mobile).exists()):
                 messages.info(request, 'Phone number already exists.')
-                return redirect('/signup/')
+                return redirect('/register/signup/')
             elif(len(mobile)!=11):
                 messages.error(request, 'Phone number must be 11 digit.')
-                return redirect('/signup/')
+                return redirect('/register/signup/')
             # elif(models.user_register.objects.filter(identy_no=identy_no).exists()):
             #     messages.info(request, 'ID number already exists.')
             #     return redirect('/signup/')
             elif not re.match(e_pattern, email) and not re.match(o_pattern, email) and not re.match(y_pattern, email):
                 messages.error(request, 'Email is not valid.')
-                return redirect('/signup/')
+                return redirect('/register/signup/')
 
             else:
             #   user_obj = User()
@@ -90,7 +90,7 @@ def signup_auth_panel(request):
               # this is create method it's fast
               user_register.objects.create(fname=fname,email=email,mobile=mobile,password=password,v_key=v_key,v_status=0 )
               send_mail(f"Hello Mr. {fname} Please confirm your Registration in Doc.com",link,'maniruzzaman.manir96@gmail.com',[email],html_message=link)
-               # this is save method 
+            #   this is save method 
             # user_model = user_register()
             # user_model.fname = fname
             # user_model.email = email
@@ -101,7 +101,7 @@ def signup_auth_panel(request):
             # user_model.save()
             
             messages.success(request, 'User Registration succesfully!')
-            return redirect('/signup/')
+            return redirect('/register/signup/')
     return render(request, 'naver/login.html')
 
 def email_generator(fname):
@@ -120,7 +120,7 @@ def email_generator(fname):
     decrypted_value = signer.unsign(encrypted_value)
     
 
-    link = f"<p>Congratulations Mr {fname} ! For registering as a user in our doctor appointment system. To confirm the registration </p><a href='http://127.0.0.1:8000/email_verification/"+encrypted_value1+"' target='_blank'>please click this Activation link</a>"
+    link = f"<p>Congratulations Mr {fname} ! For registering as a user in our doctor appointment system. To confirm the registration </p><a href='http://127.0.0.1:8000/register/email_verification/"+encrypted_value1+"' target='_blank'>please click this Activation link</a>"
 
     formatted_link = format_html(link)
     return encrypted_value1,formatted_link
@@ -135,7 +135,7 @@ def email_verify(request,id):
     user.save()
     user_data = {"u_data": user}
 
-    return render(request, 'naver/welcome.html', user_data)
+    return render(request, 'naver/congrats.html', user_data)
 
 
 def login_auth_panel(request):

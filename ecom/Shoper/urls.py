@@ -8,7 +8,7 @@ urlpatterns = [
     path('base2/', views.comoncode2.as_view()),
     path('footer/', views.footer.as_view()),
     path('header/', views.header.as_view()),
-    path('login/', views.logPage.as_view(), name="log" ),
+    # path('login/', views.logPage.as_view(), name="log" ),
     path('checkout/', views.checkout.as_view(), name="checkout" ),
     path('my_cart/', views.my_cart.as_view(), name="my_cart" ),
     path('wishlist/', views.wishlist, name="wishlist_home" ),
