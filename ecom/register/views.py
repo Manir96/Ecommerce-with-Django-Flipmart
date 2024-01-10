@@ -29,24 +29,24 @@ def user_index_panel(request):
     
     msg = messages.get_messages(request)
     data = {'all_data':all_data, 'status':status,'msg':msg}
-    return render(request, 'update_design/signup.html', data)
+    return render(request, 'naver/login.html', data)
 
 # Create your views here.
 def signup_auth_panel(request):
     if 'user_id' in request.session:
-        return redirect('home')
+        return redirect('signup')
     if request.method == 'POST':
-        fname = request.POST.get('name')
+        fname = request.POST.get('fname')
         email = request.POST.get('email').strip()
         mobile = request.POST.get('mobile')
-        identy_no = request.POST.get('identy_no')
+        # identy_no = request.POST.get('identy_no')
         password = request.POST.get('password')
-        conpw = request.POST.get('conf_password')
+        con_password = request.POST.get('con_password')
         e_pattern = r"^[a-zA-Z0-9_.]+@gmail\.com$"
         o_pattern = r"^[a-zA-Z0-9_.]+@(outlook\.com|hotmail\.com|live\.com)$"
         y_pattern = r"^[a-zA-Z0-9_.]+@yahoo\.com$"
 
-        if any(len(value) == 0 for value in [fname, email, mobile, identy_no, password, conpw]):
+        if any(len(value) == 0 for value in [fname, email, mobile, password, con_password]):
         # if any(value is None or len(value) == 0 for value in [ fname, email, mobile, identy_no, password, conpw]):
             messages.error(request, 'Empty field not accepted')
 
@@ -66,7 +66,7 @@ def signup_auth_panel(request):
             elif(not re.search(r'[!@#$%^&*()_+=\-{}[\]:;"\'|<,>.?/~]', password)):
                 messages.error(request, 'Password must contain at least one special character')
                 return redirect('/signup/')
-            elif(password!=conpw):
+            elif(password!=con_password):
                 messages.error(request, 'Your password and confirm password does not match.')
                 return redirect('/signup/')
             elif(models.user_register.objects.filter(mobile=mobile).exists()):
@@ -75,9 +75,9 @@ def signup_auth_panel(request):
             elif(len(mobile)!=11):
                 messages.error(request, 'Phone number must be 11 digit.')
                 return redirect('/signup/')
-            elif(models.user_register.objects.filter(identy_no=identy_no).exists()):
-                messages.info(request, 'ID number already exists.')
-                return redirect('/signup/')
+            # elif(models.user_register.objects.filter(identy_no=identy_no).exists()):
+            #     messages.info(request, 'ID number already exists.')
+            #     return redirect('/signup/')
             elif not re.match(e_pattern, email) and not re.match(o_pattern, email) and not re.match(y_pattern, email):
                 messages.error(request, 'Email is not valid.')
                 return redirect('/signup/')
@@ -88,7 +88,7 @@ def signup_auth_panel(request):
               v_key, link = email_generator(fname)
               
               # this is create method it's fast
-              user_register.objects.create(fname=fname,email=email,mobile=mobile,identy_no=identy_no,password=password,v_key=v_key,v_status=0 )
+              user_register.objects.create(fname=fname,email=email,mobile=mobile,password=password,v_key=v_key,v_status=0 )
               send_mail(f"Hello Mr. {fname} Please confirm your Registration in Doc.com",link,'maniruzzaman.manir96@gmail.com',[email],html_message=link)
                # this is save method 
             # user_model = user_register()
@@ -102,7 +102,7 @@ def signup_auth_panel(request):
             
             messages.success(request, 'User Registration succesfully!')
             return redirect('/signup/')
-    return render(request, 'update_design/signup.html')
+    return render(request, 'naver/login.html')
 
 def email_generator(fname):
     current_time = datetime.now().strftime("%H:%M:%S")
@@ -135,14 +135,14 @@ def email_verify(request,id):
     user.save()
     user_data = {"u_data": user}
 
-    return render(request, 'update_design/welcome.html', user_data)
+    return render(request, 'naver/welcome.html', user_data)
 
 
 def login_auth_panel(request):
     google_data = request.session.get('social_auth_google-oauth2')
     if 'user_id' in request.session or google_data:
         print(1)
-        return redirect('home')
+        return redirect('signup')
     
     else:
         print(2)
@@ -150,12 +150,12 @@ def login_auth_panel(request):
         print(google_data)
         if google_data:
             print(3)
-            return redirect('home')
+            return redirect('signup')
         
         if request.method == 'POST':
             print(4)
             email = request.POST.get('email')
-            password = request.POST.get('pass')
+            password = request.POST.get('password')
             # user = None
             try:
                 print(5)
@@ -169,16 +169,16 @@ def login_auth_panel(request):
                     request.session['user_id'] = user.id
                     request.session['user_email'] = user.email
                     request.session['user_fname'] = user.fname
-                    return redirect('home')
+                    return redirect('checkout')
                 else:
                     print(7)
                     # return HttpResponse("Login Failed")
                     messages.success(request, 'Wrong Password')
-                    return redirect('/login/')
+                    return redirect('/signup/')
             except user_register.DoesNotExist:
                 
                 messages.success(request, 'this user is not available')
-                return redirect('/login/')
+                return redirect('/signup/')
 
                 # user = authenticate(request, email=email, password=password)
                 
@@ -191,7 +191,7 @@ def login_auth_panel(request):
             # request.session['user_gemail'] = google_data.email
             
         else:
-            return render(request, 'update_design/login.html')
+            return render(request, 'naver/login.html')
 
 
 
@@ -203,4 +203,4 @@ def logout_auth_panel(request):
         # messages.success(request, 'You have been logged out successfully.')
     if 'social_auth_google-oauth2' in request.session:
         del request.session['social_auth_google-oauth2']
-    return redirect('aut_index')
+    return redirect('home')

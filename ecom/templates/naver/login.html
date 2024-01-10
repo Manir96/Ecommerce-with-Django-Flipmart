@@ -53,26 +53,27 @@
 				<div class="col-md-6 col-sm-6 create-new-account">
 					<h4 class="checkout-subtitle">Create a new account</h4>
 					<p class="text title-tag-line">Create your new account.</p>
-					<form class="register-form outer-top-xs" role="form">
+					<form class="register-form outer-top-xs" role="form" method="POST" action="{% url 'signup' %}">
+						{% csrf_token %}
 						<div class="form-group">
 							<label class="info-title" for="exampleInputEmail2">Email Address <span>*</span></label>
-							<input type="email" class="form-control unicase-form-control text-input" id="exampleInputEmail2" >
+							<input type="email" class="form-control unicase-form-control text-input" id="exampleInputEmail2" name="email" >
 						</div>
 						<div class="form-group">
-							<label class="info-title" for="exampleInputEmail1">Name <span>*</span></label>
-							<input type="email" class="form-control unicase-form-control text-input" id="exampleInputEmail1" >
+							<label class="info-title" for="exampleInputEmail1">Full Name <span>*</span></label>
+							<input type="text" class="form-control unicase-form-control text-input" id="exampleInputEmail1" name="fname" >
 						</div>
 						<div class="form-group">
 							<label class="info-title" for="exampleInputEmail1">Phone Number <span>*</span></label>
-							<input type="email" class="form-control unicase-form-control text-input" id="exampleInputEmail1" >
+							<input type="text" class="form-control unicase-form-control text-input" id="exampleInputEmail1" name="mobile">
 						</div>
 						<div class="form-group">
 							<label class="info-title" for="exampleInputEmail1">Password <span>*</span></label>
-							<input type="email" class="form-control unicase-form-control text-input" id="exampleInputEmail1" >
+							<input type="text" class="form-control unicase-form-control text-input" id="exampleInputEmail1" name="password">
 						</div>
 						<div class="form-group">
 							<label class="info-title" for="exampleInputEmail1">Confirm Password <span>*</span></label>
-							<input type="email" class="form-control unicase-form-control text-input" id="exampleInputEmail1" >
+							<input type="text" class="form-control unicase-form-control text-input" id="exampleInputEmail1" name="con_password" >
 						</div>
 						<button type="submit" class="btn-upper btn btn-primary checkout-page-button">Sign Up</button>
 					</form>	
